@@ -60,7 +60,7 @@ class PdfReport:
 class FileSharer:
     from secret.filestack_apikey import API_KEY
 
-    def __init__(self, file_path, api_key = API_KEY):
+    def __init__(self, file_path, api_key=API_KEY):
         self.file_path = file_path
         self.api_key = api_key
 
