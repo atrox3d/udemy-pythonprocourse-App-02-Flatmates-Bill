@@ -51,5 +51,5 @@ class PdfReport:
         pdf.cell(w=150, h=25, txt=str(round(bill.amount, 2)), border=BORDER,
                  ln=1)
 
-        pdf.output(self.filename)
-        webbrowser.open(f'file://{os.path.realpath(self.filename)}')            # mac-linux aware
+        pdf.output(f"files/{self.filename}")
+        webbrowser.open(f"file://{os.path.realpath(f'files/{self.filename}')}")    # mac-linux aware
