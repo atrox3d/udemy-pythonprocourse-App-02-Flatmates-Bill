@@ -56,24 +56,24 @@ class PdfReport:
         pdf.image('files/house.png', w=100, h=100)
 
         pdf.set_font(family='Arial', size=24, style='B')
-        pdf.cell(w=0, h=50, txt="Flatmates Bill", border=BORDER, align='C',  # title
+        pdf.cell(w=0, h=50, txt="Flatmates Bill", border=BORDER, align='C',     # title
                  ln=1)
 
         pdf.set_font(family='Arial', size=14, style='B')
-        pdf.cell(w=100, h=40, txt="Period:", border=BORDER)  # period
+        pdf.cell(w=100, h=40, txt="Period:", border=BORDER)                     # period
         pdf.cell(w=150, h=40, txt="March 2021", border=BORDER,
                  ln=1)
 
         pdf.set_font(family='Arial', size=12)
-        pdf.cell(w=100, h=25, txt=flatmate1.name, border=BORDER)  # 1st flatmate
+        pdf.cell(w=100, h=25, txt=flatmate1.name, border=BORDER)                # 1st flatmate
         pdf.cell(w=150, h=25, txt=flatmate1_pay, border=BORDER,
                  ln=1)
 
-        pdf.cell(w=100, h=25, txt=flatmate2.name, border=BORDER)  # 2nd flatmate
+        pdf.cell(w=100, h=25, txt=flatmate2.name, border=BORDER)                # 2nd flatmate
         pdf.cell(w=150, h=25, txt=flatmate2_pay, border=BORDER,
                  ln=1)
 
-        pdf.cell(w=100, h=25, txt="Total", border=BORDER)  # 2nd flatmate
+        pdf.cell(w=100, h=25, txt="Total", border=BORDER)                       # total
         pdf.cell(w=150, h=25, txt=str(round(the_bill.amount, 2)), border=BORDER,
                  ln=1)
 
@@ -81,21 +81,26 @@ class PdfReport:
         webbrowser.open(f'file://{os.path.realpath(self.filename)}')            # mac-linux aware
 
 
+# input values
 bill_amount = float(input("Hey user, enter the bill amount: "))
-bill_period = input("Hey user, enter the bill period: ")
+bill_period = input("Hey user, enter the bill period E.g. August 2022: ")
 
-flatmate1_name = input("Hey user, enter the first flatmate name: ")
-flatmate1_days = int(input("Hey user, enter the first flatmate days in house: "))
+name1 = input("Hey user, enter the first flatmate name: ")
+days1 = int(input(f"Hey user, enter {name1} days in house: "))
 
-flatmate2_name = input("Hey user, enter the second  flatmate name: ")
-flatmate2_days = int(input("Hey user, enter the second flatmate days in house: "))
+name2 = input("Hey user, enter the second  flatmate name: ")
+days2 = int(input(f"Hey user, enter {name2} days in house: "))
 
+# create objects
 the_bill = Bill(bill_amount, bill_period)
-flatamate1 = Flatmate(flatmate1_name, flatmate1_days)
-flatamate2 = Flatmate(flatmate2_name, flatmate2_days)
+flatamate1 = Flatmate(name1, days1)
+flatamate2 = Flatmate(name2, days2)
 
+# output to console
 print(f"{flatamate1.name} pays: {flatamate1.pays(the_bill, flatamate2)}")
 print(f"{flatamate2.name} pays: {flatamate2.pays(the_bill, flatamate1)}")
 
-pdf_report = PdfReport("Report.pdf")
+# output to pdf
+report_filename = str(the_bill.period).replace(" ", "-") + ".pdf"
+pdf_report = PdfReport(report_filename)
 pdf_report.generate(flatmate1=flatamate1, flatmate2=flatamate2, bill=the_bill)
