@@ -12,6 +12,7 @@ class PdfReport:
 
     def __init__(self, filename):
         self.filename = filename
+        self.filepath = os.path.realpath(f"files/{self.filename}")
 
     def generate(self, flatmate1, flatmate2, bill):
         flatmate1_pay = str(  # calc, format and convert pay to string
@@ -52,9 +53,8 @@ class PdfReport:
         pdf.cell(w=150, h=25, txt=str(round(bill.amount, 2)), border=BORDER,
                  ln=1)
 
-        filepath = os.path.realpath(f"files/{self.filename}")
-        pdf.output(filepath)
-        webbrowser.open(f"file://{filepath}")                                   # mac-linux aware
+        pdf.output(self.filepath)
+        webbrowser.open(f"file://{self.filepath}")                                   # mac-linux aware
 
 
 class FileSharer:
@@ -68,4 +68,4 @@ class FileSharer:
         client = Client(self.api_key)
 
         new_filelink = client.upload(filepath=self.file_path)
-        print(new_filelink.url)
+        return new_filelink.url

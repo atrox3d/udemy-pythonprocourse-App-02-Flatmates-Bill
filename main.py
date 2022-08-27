@@ -1,5 +1,5 @@
 from flat import Bill, Flatmate
-from reports import PdfReport
+from reports import PdfReport, FileSharer
 
 # input values
 bill_amount = float(input("Hey user, enter the bill amount: "))
@@ -24,3 +24,6 @@ print(f"{flatamate2.name} pays: {flatamate2.pays(the_bill, flatamate1)}")
 report_filename = str(the_bill.period).replace(" ", "-") + ".pdf"
 pdf_report = PdfReport(report_filename)
 pdf_report.generate(flatmate1=flatamate1, flatmate2=flatamate2, bill=the_bill)
+
+file_sharer = FileSharer(file_path=pdf_report.filepath)
+print(file_sharer.share())
