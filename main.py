@@ -70,17 +70,32 @@ class PdfReport:
                  ln=1)
 
         pdf.cell(w=100, h=25, txt=flatmate2.name, border=BORDER)  # 2nd flatmate
-        pdf.cell(w=150, h=25, txt=flatmate2_pay, border=BORDER, ln=1)
+        pdf.cell(w=150, h=25, txt=flatmate2_pay, border=BORDER,
+                 ln=1)
+
+        pdf.cell(w=100, h=25, txt="Total", border=BORDER)  # 2nd flatmate
+        pdf.cell(w=150, h=25, txt=str(round(the_bill.amount, 2)), border=BORDER,
+                 ln=1)
 
         pdf.output(self.filename)
         webbrowser.open(f'file://{os.path.realpath(self.filename)}')            # mac-linux aware
 
 
-the_bill = Bill(120, "March 2021")
-john = Flatmate("john", 20)
-marry = Flatmate("marry", 25)
-print(f"john pays: {john.pays(the_bill, marry)}")
-print(f"marry pays: {marry.pays(the_bill, john)}")
+bill_amount = float(input("Hey user, enter the bill amount: "))
+bill_period = input("Hey user, enter the bill period: ")
+
+flatmate1_name = input("Hey user, enter the first flatmate name: ")
+flatmate1_days = int(input("Hey user, enter the first flatmate days in house: "))
+
+flatmate2_name = input("Hey user, enter the second  flatmate name: ")
+flatmate2_days = int(input("Hey user, enter the second flatmate days in house: "))
+
+the_bill = Bill(bill_amount, bill_period)
+flatamate1 = Flatmate(flatmate1_name, flatmate1_days)
+flatamate2 = Flatmate(flatmate2_name, flatmate2_days)
+
+print(f"{flatamate1.name} pays: {flatamate1.pays(the_bill, flatamate2)}")
+print(f"{flatamate2.name} pays: {flatamate2.pays(the_bill, flatamate1)}")
 
 pdf_report = PdfReport("Report.pdf")
-pdf_report.generate(flatmate1=john, flatmate2=marry, bill=the_bill)
+pdf_report.generate(flatmate1=flatamate1, flatmate2=flatamate2, bill=the_bill)
