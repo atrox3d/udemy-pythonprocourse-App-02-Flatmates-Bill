@@ -48,24 +48,27 @@ class PdfReport:
             unit='pt',                                                          # points
             format='A4'
         )
+        BORDER = 0
         pdf.add_page()
+
+        pdf.image('files/house.png', w=100, h=100)
+
         pdf.set_font(family='Arial', size=24, style='B')
-
-        pdf.image('files/house.png', w=200, h=200)
-
-        pdf.cell(w=0, h=50, txt="Flatmates Bill", border=1, align='C',          # title
+        pdf.cell(w=0, h=50, txt="Flatmates Bill", border=BORDER, align='C',     # title
                  ln=1)
 
-        pdf.cell(w=100, h=40, txt="Period:", border=1)                          # period
-        pdf.cell(w=150, h=40, txt="March 2021", border=1,
+        pdf.set_font(family='Arial', size=14, style='B')
+        pdf.cell(w=100, h=40, txt="Period:", border=BORDER)                     # period
+        pdf.cell(w=150, h=40, txt="March 2021", border=BORDER,
                  ln=1)
 
-        pdf.cell(w=100, h=40, txt=flatmate1.name, border=1)                     # 1st flatmate
-        pdf.cell(w=150, h=40, txt=flatmate1_pay, border=1,
+        pdf.set_font(family='Arial', size=12)
+        pdf.cell(w=100, h=25, txt=flatmate1.name, border=BORDER)                # 1st flatmate
+        pdf.cell(w=150, h=25, txt=flatmate1_pay, border=BORDER,
                  ln=1)
 
-        pdf.cell(w=100, h=40, txt=flatmate2.name, border=1)                     # 2nd flatmate
-        pdf.cell(w=150, h=40, txt=flatmate2_pay, border=1, ln=1)
+        pdf.cell(w=100, h=25, txt=flatmate2.name, border=BORDER)                # 2nd flatmate
+        pdf.cell(w=150, h=25, txt=flatmate2_pay, border=BORDER, ln=1)
 
         pdf.output(self.filename)
 
