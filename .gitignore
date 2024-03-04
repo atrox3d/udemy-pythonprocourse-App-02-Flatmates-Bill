@@ -3,3 +3,4 @@
 /private/
 /secret/
 *.pdf
+__pycache__
